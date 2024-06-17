@@ -7,4 +7,9 @@ data class Item(
     val listId: Int,
     @SerializedName("name")
     val name: String
-)
+) {
+    fun toModel() = Item(
+        listId = this.listId,
+        name = this.name
+    )
+}
