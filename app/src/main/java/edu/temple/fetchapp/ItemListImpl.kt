@@ -36,9 +36,9 @@ class ItemListImpl: ItemList {
             val response = itemAPI.getItems().awaitResponse()
             if (response.isSuccessful) {
                 val items = response.body() ?: emptyList()
-                items.mapNotNull {
-                    it.toModel()
-                }
+                items
+                    .filter { !it.name.isNullOrEmpty() }
+                    .map { it.toModel() }
             } else {
                 emptyList()
             }
