@@ -2,7 +2,7 @@ package edu.temple.fetchapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val instructionsTextView = findViewById<TextView>(R.id.instructionsTextView)
+        instructionsTextView.textSize = 30f
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
 
         val scope = CoroutineScope(Job() + Dispatchers.Default)
@@ -26,6 +28,7 @@ class MainActivity : AppCompatActivity() {
                 .getItems().sortedWith(compareBy({it.listId}, { it.name.filter { name -> name.isDigit() }.toInt() }))
                 .groupBy ({it.listId}, {it.name} )
             withContext(Dispatchers.Main) {
+                instructionsTextView.text = "Scroll horizontally to view the full item list"
                 recyclerView.adapter = ItemMapDisplayAdapter(itemMap)
                 recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
             }

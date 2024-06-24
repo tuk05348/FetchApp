@@ -5,13 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 class ItemMapDisplayAdapter (_itemMap : Map<Int, List<String>>) : RecyclerView.Adapter<ItemMapDisplayAdapter.ItemMapViewHolder>() {
 
     private val itemMap = _itemMap
     inner class ItemMapViewHolder(layout: View) : RecyclerView.ViewHolder(layout) {
-        val listIdTextView = layout.findViewById<TextView>(R.id.listIdTextView)
-        val nameListTextView = layout.findViewById<TextView>(R.id.nameListTextView)
+        val listIdTextView: TextView = layout.findViewById<TextView>(R.id.listIdTextView)
+        val nameListRecyclerView: RecyclerView = layout.findViewById<RecyclerView>(R.id.nameListRecyclerView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemMapViewHolder {
@@ -24,7 +25,9 @@ class ItemMapDisplayAdapter (_itemMap : Map<Int, List<String>>) : RecyclerView.A
 
     override fun onBindViewHolder(holder: ItemMapViewHolder, position: Int) {
         val key = itemMap.keys.elementAt(position)
-        holder.listIdTextView.text = key.toString()
-        holder.nameListTextView.text = itemMap[key].toString()
+        holder.listIdTextView.text = "List ID: $key"
+        holder.listIdTextView.textSize = 26f
+        holder.nameListRecyclerView.adapter = itemMap[key]?.let { ItemListDisplayAdapter(it) }
+        holder.nameListRecyclerView.layoutManager = StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.HORIZONTAL)
     }
 }
