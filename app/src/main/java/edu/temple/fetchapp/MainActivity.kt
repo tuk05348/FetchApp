@@ -7,6 +7,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.util.TreeMap
+import java.util.TreeSet
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,9 +16,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val scope = CoroutineScope(Job() + Dispatchers.Default)
+        lateinit var itemList : List<Item>
 
         scope.launch {
-            Log.d("ItemList", ItemListImpl().getItems().toString())
+            itemList = ItemListImpl().getItems().sortedBy { it.listId }
+            Log.d("list", itemList.toString())
         }
     }
 }
