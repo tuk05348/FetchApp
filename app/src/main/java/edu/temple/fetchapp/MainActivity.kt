@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
-    lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
                 .getItems().sortedWith(compareBy({it.listId}, { it.name.filter { name -> name.isDigit() }.toInt() }))
                 .groupBy ({it.listId}, {it.name} )
             withContext(Dispatchers.Main) {
-                instructionsTextView.text = "Scroll horizontally to view the full item list"
+                instructionsTextView.text = getString(R.string.instructions)
                 recyclerView.adapter = ItemMapDisplayAdapter(itemMap)
                 recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
             }

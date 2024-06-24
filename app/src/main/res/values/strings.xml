@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FetchApp</string>
+    <string name="loading">Loading…</string>
+    <string name="instructions">Scroll horizontally to view the full item list</string>
 </resources>
