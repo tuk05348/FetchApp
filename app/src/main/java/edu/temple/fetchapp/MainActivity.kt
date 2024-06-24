@@ -16,10 +16,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val scope = CoroutineScope(Job() + Dispatchers.Default)
-        lateinit var itemList : List<Item>
 
         scope.launch {
-            itemList = ItemListImpl().getItems().sortedBy { it.listId }
+            val itemList = ItemListImpl().getItems().sortedWith(compareBy({it.listId}, {it.name}))
             Log.d("list", itemList.toString())
         }
     }
