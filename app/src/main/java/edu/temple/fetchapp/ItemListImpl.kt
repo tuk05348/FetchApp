@@ -9,19 +9,23 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ItemListImpl: ItemList {
 
-    private val baseUrl = "https://fetch-hiring.s3.amazonaws.com/"
+    private val baseUrl = "https://fetch-hiring.s3.amazonaws.com/" //API endpoint
 
-    private val itemAPI: ItemAPI
+    private val itemAPI: ItemAPI //Instance for making API call
 
     init {
+        //Logging interceptor to log response and request and check we are indeed getting data
+        //for debugging purposes
         val mHttpLoggingInterceptor = HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.BODY)
 
+        //HTTP client for making request
         val mOkHttpClient = OkHttpClient
             .Builder()
             .addInterceptor(mHttpLoggingInterceptor)
             .build()
 
+        //Retrofit instance that deserializes the requested data and handles the API call
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
@@ -31,6 +35,8 @@ class ItemListImpl: ItemList {
         itemAPI = retrofit.create(ItemAPI::class.java)
     }
 
+    //method makes API call and checks if the response was successful, if so it takes the list
+    //of items, filters out all null or empty names, and maps each to the Item model data class
     override suspend fun getItems(): List<Item> {
         return try {
             val response = itemAPI.getItems().awaitResponse()

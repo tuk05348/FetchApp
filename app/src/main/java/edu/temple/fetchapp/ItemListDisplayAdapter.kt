@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+///Custom adapter for the item list, inflates a text view for each item name
 class ItemListDisplayAdapter(_itemList: List<String>) : RecyclerView.Adapter<ItemListDisplayAdapter.ItemListViewHolder>() {
 
         private val itemList = _itemList

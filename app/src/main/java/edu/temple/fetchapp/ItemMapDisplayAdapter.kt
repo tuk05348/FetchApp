@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
+//Custom adapter for item map, display each list ID and create a recycler view for each list of associated items
 class ItemMapDisplayAdapter (_itemMap : Map<Int, List<String>>) : RecyclerView.Adapter<ItemMapDisplayAdapter.ItemMapViewHolder>() {
 
     private val itemMap = _itemMap
